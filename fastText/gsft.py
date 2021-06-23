@@ -1,5 +1,3 @@
-#from gensim.models import FastText
-#from gensim.models.wrappers import FastText
 import operator
 import gensim
 from gensim.models import KeyedVectors
@@ -20,24 +18,12 @@ L_MIN_N = [1]
 L_MAX_N = [2]
 L_EPOCHS = [13]
 L_ALPHA = [0.01]
-#Hsoft=1, negsamp=0.
 L_HSOFT_NEGSAMP = [0]
 L_SAMPLE = [1.00E-05]
 L_NEGATIVE = [5]
 L_NEGEXP = [0.5]
 
-#FULL size
-#INPUT_FILENAME = '../all_sentences_lower.txt'
 INPUT_FILENAME = '../all_sentences_lower_lemmatized.txt'
-
-#HALF size
-#INPUT_FILENAME = 'ccby_sentences_lower_lemmatized.txt'
-
-#QUARTER size
-#INPUT_FILENAME = 'visir_bylgjan_wiki_haestirettur_sentences_lower_lemmatized.txt'
-
-#TINY size
-#INPUT_FILENAME = 'bylgjan_sentences.txt'
 
 
 FILE_OUT_STRINGLIST = []
@@ -96,11 +82,6 @@ def train_ft(input_file, output_file, min_count_var, window_var, sg_cbow_var, si
                                                max_vocab_size=1000000000)
     ft_model.save(output_file)
     return ft_model
-
-
-def load_hyper(hyper_filename):
-    str_em = ""
-    return str_em
 
 
 # Loads a dictionary with key tuple (word1, word2) and value its average score scaled to [0,1]
@@ -165,7 +146,6 @@ def eval_vectors(ft_vectors, msl_dic):
 
 
 def train_model(msl_dict):
-    #hyper = load_hyper('hyper.txt')
     with open('hyper-out.txt', "a", encoding="utf8") as h_out:
         str_mod = INPUT_FILENAME
 
@@ -219,25 +199,12 @@ def train_model(msl_dict):
                                                         li[CSV_BUCKET] = ""
                                                         li[CSV_MINCOUNT] = str(m_c)
 
-                                                        '''
-                                                        startnow = datetime.now()
-                                                        h_out.write("Training starts: ")
-                                                        h_out.write(str(startnow))
-                                                        h_out.write("\n")
-                                                        h_out.flush()
-                                                        os.fsync(h_out)
-                                                        '''
-
-                                                        # To train a small-size model
-                                                        # small_model = train_ft(str_mod, 'bylgjan_ft.bin', m_c, l_w, sg, si, min_n, max_n, i, a, hs, sa, neg, nexp)
 
                                                         # To train a full-size model and save its vectors
-                                                        
                                                         full_model = train_ft(str_mod, 'rmh_ft.bin', m_c, l_w, sg, si, min_n, max_n, i, a, hs, sa, neg, nexp)
                                                         mod_vectors = full_model.wv
                                                         mod_vectors.save('rmh_ft_vectors.kv')
                                                         
-
                                                         # To load pre-trained model
                                                         # loaded_model = load_model()
 
@@ -247,12 +214,7 @@ def train_model(msl_dict):
                                                         # (1)FT:INIT
                                                         spear_similarity = eval_vectors(mod_vectors, msl_dict)
                                                         li[CSV_MSL1] = str(spear_similarity)
-                                                        '''
-                                                        str_input_values = "min_count " + str(m_c) + ", window = " + str(l_w) + ", sg " + str(sg) + ", size " + str(si) \
-                                                        + ", min_n " + str(min_n) + ", max_n " + str(max_n) + ", iter(epoch) " + str(i) + ", alpha " + str(a) \
-                                                        + ", hsoft(vs negsamp) " + str(hs) + ", sample " + str(sa) + ", negative " + str(neg) \
-                                                        + ", neg exp " + str(nexp) + "\n"
-                                                        '''
+
                                                         # (fBATS), run on clean vectors before postprocessing alterations
                                                         print('Derivational analogy:')
                                                         li[CSV_DER] = str(evaluate_word_analogies_mod('analogy_derivational.txt', 'rmh_ft_vectors.kv'))
@@ -302,21 +264,7 @@ def train_model(msl_dict):
                                                         mod_vectors = all_but_the_top_vectors(mod_vectors, 10)
                                                         spear_sim_uncovec_top10 = eval_vectors(mod_vectors, msl_dict)
                                                         li[CSV_MSL1254] = str(spear_sim_uncovec_top10)
-                                                        '''
-                                                        str_result = "Spearman: Original = " + str(spear_similarity) + ", MC = " + str(spear_sim_mc) + "\n" \
-                                                        + "ABTT(-3) = " + str(spear_sim_top3) + ", ABTT(-10) = " + str(spear_sim_top10) + ", UNCOVEC = " + str(spear_uncovec) + "\n" \
-                                                        + "MC, UNCOVEC, ABTT(-3) = " + str(spear_sim_uncovec_top3) + ", MC, UNCOVEC, ABTT(-10) = " + str(spear_sim_uncovec_top10) + "\n\n"
-                                                        str_final = str_input_values + str_result
-                                                        h_out.write("str_final: ")
-                                                        h_out.write(str_final)
 
-                                                        h_out.write("End training: ")
-                                                        endnow = datetime.now()
-                                                        h_out.write(str(endnow))
-                                                        h_out.write("\n")
-                                                        h_out.flush()
-                                                        os.fsync(h_out)
-                                                        '''
                                                         h_out.write(("\t".join(entry for entry in li)) + "\n\n")
 
 def load_model():
@@ -387,4 +335,3 @@ def uncovec_vectors(in_vectors, alpha):
 ### MAIN STARTS ###
 msl_dictionary = load_msl('msl.txt')
 train_model(msl_dictionary)
-print("Training completed.")
