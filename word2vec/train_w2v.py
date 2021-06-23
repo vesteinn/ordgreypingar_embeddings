@@ -1,5 +1,3 @@
-#from gensim.models import FastText
-#from gensim.models.wrappers import FastText
 from gensim.models.word2vec import Word2Vec
 import operator
 import gensim
@@ -17,30 +15,15 @@ L_MIN_COUNT = [5]
 L_WINDOW = [9]
 L_SG = [1]
 L_VECTOR_SIZE = [350]
-#L_MIN_N = [5]
-#L_MAX_N = [5]
 L_EPOCHS = [13]
 L_ALPHA = [0.05]
-#Hsoft=1, negsamp=0.
 L_HSOFT_NEGSAMP = [0]
 L_SAMPLE = [1.00E-05]
 L_NEGATIVE = [19]
 L_NEGEXP = [0.5]
 #L_CBOW_MEAN = [0]
 
-#FULL size
-INPUT_FILENAME = '../all_sentences_lower_lemmatized.txt'
-#INPUT_FILENAME = '../all_sentences_lower.txt'
-
-#HALF size
-#INPUT_FILENAME = 'ccby_sentences_lower_lemmatized.txt'
-
-#QUARTER size
-#INPUT_FILENAME = 'visir_bylgjan_wiki_haestirettur_sentences_lower_lemmatized.txt'
-
-#TINY size
-#INPUT_FILENAME = 'bylgjan_sentences.txt'
-
+INPUT_FILENAME = 'all_sentences_lower_lemmatized.txt'
 
 FILE_OUT_STRINGLIST = []
 CSV_HEADER = "DERIVATIONAL\tINFLECTIONAL\tENCYCLOPEDIC\tLEXICOGRAPHIC\tMSL-1\tMSL-2\tMSL-3\tMSL-4\tMSL-5\tMSL-1.2.5.3\tMSL-1.2.5.4\t" \
@@ -100,11 +83,6 @@ def train_w2v(input_file, output_file, min_count_var, window_var, sg_cbow_var, s
     return w2v_model
 
 
-def load_hyper(hyper_filename):
-    str_em = ""
-    return str_em
-
-
 # Loads a dictionary with key tuple (word1, word2) and value its average score scaled to [0,1]
 # Input file has tab-separated lines with word1, word2, original average, scaled average
 def load_msl(input_filename):
@@ -121,7 +99,7 @@ def load_msl(input_filename):
 # Create two sequences of 1,888 values each - annotator averages and cosine similarities - then compare
 # them using Spearman's correlation. Note that since some words are in fact multiword phrases, which require
 # a different kind of cosine similarity calculation than single words do, we can't use the Gensim function
-# evaluate_word_pairs() out of them box ... but since that function simply creates the lists and then
+# evaluate_word_pairs() out of the box ... but since that function simply creates the lists and then
 # calls on stats.spearmanr, the following code is fully comparable.
 def eval_model(w2v_model, msl_dic):
     spear_list_ann_scores = []
@@ -145,7 +123,7 @@ def eval_model(w2v_model, msl_dic):
 # Create two sequences of 1,888 values each - annotator averages and cosine similarities - then compare
 # them using Spearman's correlation. Note that since some words are in fact multiword phrases, which require
 # a different kind of cosine similarity calculation than single words do, we can't use the Gensim function
-# evaluate_word_pairs() out of them box ... but since that function simply creates the lists and then
+# evaluate_word_pairs() out of the box ... but since that function simply creates the lists and then
 # calls on stats.spearmanr, the following code is fully comparable.
 def eval_vectors(w2v_vectors, msl_dic):
     spear_list_ann_scores = []
@@ -173,10 +151,8 @@ def eval_vectors(w2v_vectors, msl_dic):
 
 
 def train_model(msl_dict):
-    #hyper = load_hyper('hyper.txt')
     with open('hyper-out.txt', "a", encoding="utf8") as h_out:
         str_mod = INPUT_FILENAME
-
         list_min_count = L_MIN_COUNT
         list_window = L_WINDOW
         list_sg = L_SG
@@ -226,47 +202,25 @@ def train_model(msl_dict):
                                                 li[CSV_MINCOUNT] = str(m_c)
                                                 li[CSV_CBOWMEAN] = ""
 
-                                                '''
-                                                startnow = datetime.now()
-                                                h_out.write("Training starts: ")
-                                                h_out.write(str(startnow))
-                                                h_out.write("\n")
-                                                h_out.flush()
-                                                os.fsync(h_out)
-                                                '''
-
-                                                # To train a small-size model
-                                                # small_model = train_ft(str_mod, 'bylgjan_ft.bin', m_c, l_w, sg, si, min_n, max_n, i, a, hs, sa, neg, nexp)
                                                 # To train a full-size model and save its vectors
-                                                        
                                                 full_model = train_w2v(str_mod, 'rmh_w2v.bin', m_c, l_w, sg, si, i, a, hs, sa, neg, nexp) #cm
                                                 mod_vectors = full_model.wv
                                                 mod_vectors.save('rmh_w2v_vectors.kv')
                                                             
-
                                                 # To load pre-trained model
                                                 # loaded_model = load_model()
 
                                                 # To load pre-trained vectors
-                                                #mod_vectors = gensim.models.keyedvectors.Word2VecKeyedVectors.load_word2vec_format(INPUT_FILENAME, binary=False)
                                                 mod_vectors = KeyedVectors.load('rmh_w2v_vectors.kv')
 
                                                 # (1)FT:INIT
                                                 spear_similarity = eval_vectors(mod_vectors, msl_dict)
                                                 li[CSV_MSL1] = str(spear_similarity)
-                                                '''
-                                                str_input_values = "min_count " + str(m_c) + ", window = " + str(l_w) + ", sg " + str(sg) + ", size " + str(si) \
-                                                + ", min_n " + str(min_n) + ", max_n " + str(max_n) + ", iter(epoch) " + str(i) + ", alpha " + str(a) \
-                                                + ", hsoft(vs negsamp) " + str(hs) + ", sample " + str(sa) + ", negative " + str(neg) \
-                                                + ", cbow mean " + cm + ", neg exp " + str(nexp) + "\n"
-                                                '''
+
                                                 # (fBATS), run on clean vectors before postprocessing alterations
                                                 li[CSV_DER] = str(evaluate_word_analogies_mod('analogy_derivational.txt', 'rmh_w2v_vectors.kv'))
-
                                                 li[CSV_INF] = str(evaluate_word_analogies_mod('analogy_inflectional.txt', 'rmh_w2v_vectors.kv'))
-
                                                 li[CSV_ENC] = str(evaluate_word_analogies_mod('analogy_encyclopedic.txt', 'rmh_w2v_vectors.kv'))
-
                                                 li[CSV_LEX] = str(evaluate_word_analogies_mod('analogy_lexicographic.txt', 'rmh_w2v_vectors.kv'))
 
                                                 #(2)FT:+MC
@@ -308,21 +262,7 @@ def train_model(msl_dict):
                                                 mod_vectors = all_but_the_top_vectors(mod_vectors, 10)
                                                 spear_sim_uncovec_top10 = eval_vectors(mod_vectors, msl_dict)
                                                 li[CSV_MSL1254] = str(spear_sim_uncovec_top10)
-                                                '''
-                                                str_result = "Spearman: Original = " + str(spear_similarity) + ", MC = " + str(spear_sim_mc) + "\n" \
-                                                + "ABTT(-3) = " + str(spear_sim_top3) + ", ABTT(-10) = " + str(spear_sim_top10) + ", UNCOVEC = " + str(spear_uncovec) + "\n" \
-                                                + "MC, UNCOVEC, ABTT(-3) = " + str(spear_sim_uncovec_top3) + ", MC, UNCOVEC, ABTT(-10) = " + str(spear_sim_uncovec_top10) + "\n\n"
-                                                str_final = str_input_values + str_result
-                                                h_out.write("str_final: ")
-                                                h_out.write(str_final)
 
-                                                h_out.write("End training: ")
-                                                endnow = datetime.now()
-                                                h_out.write(str(endnow))
-                                                h_out.write("\n")
-                                                h_out.flush()
-                                                os.fsync(h_out)
-                                                '''
                                                 h_out.write(("\t".join(entry for entry in li)) + "\n\n")
 
 def load_model():  
@@ -393,4 +333,3 @@ def uncovec_vectors(in_vectors, alpha):
 ### MAIN STARTS ###
 msl_dictionary = load_msl('msl.txt')
 train_model(msl_dictionary)
-print("Training completed.")
