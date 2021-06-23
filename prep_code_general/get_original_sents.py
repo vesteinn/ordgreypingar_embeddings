@@ -1,3 +1,6 @@
+"""Writes out a large file containing all sentences in the Icelandic Gigaword Corpus,
+nonlemmatized"""
+
 from rmh_extractor import RmhExtractor
 from string import punctuation
 

@@ -245,8 +245,8 @@ def train_model(msl_dict):
                                                         mod_vectors = KeyedVectors.load('rmh_ft_vectors.kv')
 
                                                         # (1)FT:INIT
-                                                        #spear_similarity = eval_vectors(mod_vectors, msl_dict)
-                                                        #li[CSV_MSL1] = str(spear_similarity)
+                                                        spear_similarity = eval_vectors(mod_vectors, msl_dict)
+                                                        li[CSV_MSL1] = str(spear_similarity)
                                                         '''
                                                         str_input_values = "min_count " + str(m_c) + ", window = " + str(l_w) + ", sg " + str(sg) + ", size " + str(si) \
                                                         + ", min_n " + str(min_n) + ", max_n " + str(max_n) + ", iter(epoch) " + str(i) + ", alpha " + str(a) \
@@ -264,44 +264,44 @@ def train_model(msl_dict):
                                                         li[CSV_LEX] = str(evaluate_word_analogies_mod('analogy_lexicographic.txt', 'rmh_ft_vectors.kv'))                                 
 
                                                         #(2)FT:+MC
-                                                        #mod_vectors = mean_center_vectors(mod_vectors)
-                                                        #spear_sim_mc = eval_vectors(mod_vectors, msl_dict)
-                                                        #li[CSV_MSL2] = str(spear_sim_mc)
+                                                        mod_vectors = mean_center_vectors(mod_vectors)
+                                                        spear_sim_mc = eval_vectors(mod_vectors, msl_dict)
+                                                        li[CSV_MSL2] = str(spear_sim_mc)
 
                                                         #(3)FT:+ABTT(-3)
-                                                        #mod_vectors = all_but_the_top_vectors(mod_vectors, 3)
-                                                        #spear_sim_top3 = eval_vectors(mod_vectors, msl_dict)
-                                                        #li[CSV_MSL3] = str(spear_sim_top3)
+                                                        mod_vectors = all_but_the_top_vectors(mod_vectors, 3)
+                                                        spear_sim_top3 = eval_vectors(mod_vectors, msl_dict)
+                                                        li[CSV_MSL3] = str(spear_sim_top3)
 
                                                         #(4)FT:+ABTT(-10)
-                                                        #mod_vectors = KeyedVectors.load('rmh_ft_vectors.kv')
-                                                        #mod_vectors = mean_center_vectors(mod_vectors)
-                                                        #mod_vectors = all_but_the_top_vectors(mod_vectors, 10)
-                                                        #spear_sim_top10 = eval_vectors(mod_vectors, msl_dict)
-                                                        #li[CSV_MSL4] = str(spear_sim_top10)
+                                                        mod_vectors = KeyedVectors.load('rmh_ft_vectors.kv')
+                                                        mod_vectors = mean_center_vectors(mod_vectors)
+                                                        mod_vectors = all_but_the_top_vectors(mod_vectors, 10)
+                                                        spear_sim_top10 = eval_vectors(mod_vectors, msl_dict)
+                                                        li[CSV_MSL4] = str(spear_sim_top10)
 
                                                         #(5)FT:+UNCOVEC
-                                                        #mod_vectors = KeyedVectors.load('rmh_ft_vectors.kv')
-                                                        #mod_vectors = mean_center_vectors(mod_vectors)
-                                                        #mod_vectors = uncovec_vectors(mod_vectors, -0.3)
-                                                        #spear_uncovec = eval_vectors(mod_vectors, msl_dict)
-                                                        #li[CSV_MSL5] = str(spear_uncovec)
+                                                        mod_vectors = KeyedVectors.load('rmh_ft_vectors.kv')
+                                                        mod_vectors = mean_center_vectors(mod_vectors)
+                                                        mod_vectors = uncovec_vectors(mod_vectors, -0.3)
+                                                        spear_uncovec = eval_vectors(mod_vectors, msl_dict)
+                                                        li[CSV_MSL5] = str(spear_uncovec)
 
                                                         #(1)+(2)+(5)+(3)
-                                                        #mod_vectors = KeyedVectors.load('rmh_ft_vectors.kv')
-                                                        #mod_vectors = mean_center_vectors(mod_vectors)
-                                                        #mod_vectors = uncovec_vectors(mod_vectors, -0.3)
-                                                        #mod_vectors = all_but_the_top_vectors(mod_vectors, 3)
-                                                        #spear_sim_uncovec_top3 = eval_vectors(mod_vectors, msl_dict)
-                                                        #li[CSV_MSL1253] = str(spear_sim_uncovec_top3)
+                                                        mod_vectors = KeyedVectors.load('rmh_ft_vectors.kv')
+                                                        mod_vectors = mean_center_vectors(mod_vectors)
+                                                        mod_vectors = uncovec_vectors(mod_vectors, -0.3)
+                                                        mod_vectors = all_but_the_top_vectors(mod_vectors, 3)
+                                                        spear_sim_uncovec_top3 = eval_vectors(mod_vectors, msl_dict)
+                                                        li[CSV_MSL1253] = str(spear_sim_uncovec_top3)
 
                                                         #(1)+(2)+(5)+(4)
-                                                        #mod_vectors = KeyedVectors.load('rmh_ft_vectors.kv')
-                                                        #mod_vectors = mean_center_vectors(mod_vectors)
-                                                        #mod_vectors = uncovec_vectors(mod_vectors, -0.3)
-                                                        #mod_vectors = all_but_the_top_vectors(mod_vectors, 10)
-                                                        #spear_sim_uncovec_top10 = eval_vectors(mod_vectors, msl_dict)
-                                                        #li[CSV_MSL1254] = str(spear_sim_uncovec_top10)
+                                                        mod_vectors = KeyedVectors.load('rmh_ft_vectors.kv')
+                                                        mod_vectors = mean_center_vectors(mod_vectors)
+                                                        mod_vectors = uncovec_vectors(mod_vectors, -0.3)
+                                                        mod_vectors = all_but_the_top_vectors(mod_vectors, 10)
+                                                        spear_sim_uncovec_top10 = eval_vectors(mod_vectors, msl_dict)
+                                                        li[CSV_MSL1254] = str(spear_sim_uncovec_top10)
                                                         '''
                                                         str_result = "Spearman: Original = " + str(spear_similarity) + ", MC = " + str(spear_sim_mc) + "\n" \
                                                         + "ABTT(-3) = " + str(spear_sim_top3) + ", ABTT(-10) = " + str(spear_sim_top10) + ", UNCOVEC = " + str(spear_uncovec) + "\n" \

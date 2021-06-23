@@ -8,8 +8,8 @@ def evaluate_word_analogies_mod(analogies, language_model):
     """
     analogies = the txt file containing the analogy questions of one of the four
     top categories of IceBATS. 
-    vectors = the kv file containing the vectors of the trained language model
-    to be evaluated. 
+    language model = the vectors of the trained language model to be evaluated 
+    (they are loaded via glove_msl.py). 
 
     This function is heavily inspired by the function evaluate_word_analogies
     from Gensim's KeyedVectors. It starts by loading the vectors of the model to

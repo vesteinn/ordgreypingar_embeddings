@@ -1,5 +1,5 @@
 """
-These two classes are responsible for iterating through the RMH corpus
+These two classes are responsible for iterating through the Icelandic Gigaword corpus
 and representing every single token of it.
 """
 

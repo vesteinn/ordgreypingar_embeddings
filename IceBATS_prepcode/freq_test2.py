@@ -1,7 +1,11 @@
+"""A very simple script that compares the word pairs in IceBATS to
+a list of frequencies from the Icelandic Gigaword Corpus in order
+to evaluate which pairs can be used for testing"""
+
 import glob
 import numpy as np
 
-files = glob.glob('../BATS/FrankenBATS/final/*/*.txt', recursive=True)
+files = glob.glob('../IceBATS/final/*/*.txt', recursive=True)
 
 vocab = []
 

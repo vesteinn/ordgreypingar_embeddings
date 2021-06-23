@@ -1,8 +1,12 @@
+"""Goes through the individual files containing the word pairs
+for IceBATS and writes out a joint file with all possible 
+combinations of the pairs"""
+
 import glob
 from progress.bar import IncrementalBar
 import sys
 
-files = glob.glob('../BATS/FrankenBATS/final/lexicographic/*.txt', recursive=True)
+files = glob.glob('../IceBATS/final/lexicographic/*.txt', recursive=True)
 
 filebar = IncrementalBar('Inntaksskjöl lesin', max = len(files))
 cat_dict = {}

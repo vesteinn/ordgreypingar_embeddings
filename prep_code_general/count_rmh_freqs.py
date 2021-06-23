@@ -1,3 +1,7 @@
+"""Writes out a file containing the frequencies of all lemmas
+or word forms (replace word.lemma with word.word_form) in 
+the Icelandic Gigaword Corpus"""
+
 from rmh_extractor import RmhExtractor
 from string import punctuation
 

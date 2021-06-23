@@ -1,3 +1,6 @@
+"""Writes out a large file containing all sentences in the Icelandic Gigaword Corpus,
+lemmatized"""
+
 from rmh_extractor import RmhExtractor
 
 def extract_sents():
