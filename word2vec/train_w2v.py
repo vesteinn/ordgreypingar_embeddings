@@ -24,6 +24,7 @@ L_NEGEXP = [0.5]
 #L_CBOW_MEAN = [0]
 
 INPUT_FILENAME = 'all_sentences_lower_lemmatized.txt'
+#INPUT_FILENAME = 'all_sentences_lower.txt'
 
 FILE_OUT_STRINGLIST = []
 CSV_HEADER = "DERIVATIONAL\tINFLECTIONAL\tENCYCLOPEDIC\tLEXICOGRAPHIC\tMSL-1\tMSL-2\tMSL-3\tMSL-4\tMSL-5\tMSL-1.2.5.3\tMSL-1.2.5.4\t" \

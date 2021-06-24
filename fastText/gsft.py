@@ -23,7 +23,9 @@ L_SAMPLE = [1.00E-05]
 L_NEGATIVE = [5]
 L_NEGEXP = [0.5]
 
-INPUT_FILENAME = '../all_sentences_lower_lemmatized.txt'
+INPUT_FILENAME = '../all_sentences_lower.txt'
+#INPUT_FILENAME = '../all_sentences_lower_lemmatized.txt'
+
 
 
 FILE_OUT_STRINGLIST = []
@@ -182,7 +184,7 @@ def train_model(msl_dict):
                                                             li[CSV_SGCB] = "SG"
                                                         else:
                                                             li[CSV_SGCB] = "CB"
-                                                        li[CSV_LEMMAD] = "JÁ"
+                                                        li[CSV_LEMMAD] = "NEI"
                                                         li[CSV_SIZE] = str(si)
                                                         li[CSV_WINDOW] = str(l_w)
                                                         li[CSV_ALPHA] = str(a)
