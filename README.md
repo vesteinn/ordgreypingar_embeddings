@@ -1,4 +1,4 @@
-#Embeddings
+# Embeddings
 
 This repository houses evaluation datasets for semantic and morphological relatedness in the Icelandic language, along with pre-trained word embeddings evaluated using those datasets.
 
@@ -9,14 +9,15 @@ More specifically, users of this repository can perform any or all of the three 
 3. Evaluate the embeddings using either of two different datasets: MSL or IceBATS.
 
 Please note that training and evaluation often require a sizeable amount of memory (plus, when using GloVe, a hefty amount of hard drive space), and may take a long time. If you're only testing your code, you may want to try preparing smaller input files rather than utilizing the full extent of the IGC, and to set the epoch hyperparameter to a low value for briefer training sessions. If you're only performing evaluation and don't need to create or alter embeddings, we recommend that you follow the approach in our code of using only vector files rather than the model files in their entirety.
-Input file generation
-We use data from the Icelandic Gigaword Corpus (IGC), accessible through CLARIN at https://clarin.is/en/resources/gigaword/ . The following code assumes that the IGC data is available in a subfolder named /RMH/
+
+# Input file generation
+We use data from the Icelandic Gigaword Corpus (IGC), accessible through [CLARIN](https://clarin.is/en/resources/gigaword/). The following code assumes that the IGC data is available in a subfolder named /RMH/
 
 Generation code is located in the /prep_code_general/ folder. Use get_lemmatized_sents.py to create an input file with lemmatized data, or get_original_sents.py to create an input file without lemmatizing the data.
 
 If you intend to use GloVe to train embeddings, you will subsequently need to run make_oneline.py on that input file.
 
-#Training embeddings
+# Training embeddings
 
 
 The code for each method is located in an eponymous folder. Note that it will not only train embeddings, but also run a full evaluation of them right after. A brief guide on how to skip the evaluation process may be found below.
@@ -28,7 +29,7 @@ For word2vec and fastText, you simply need to run their respective "train_w2v.py
 GloVe, however, requires you to run the glove_train.sh Bash script, which in turn will call on glove_msl.py. The actual training, in fact, is performed entirely inside the Bash script, with the Python file used only for evaluation. If you wish only to train, open the glove_train.sh script and comment out the two lines near the end that contain a reference to "glove_msl.py".
 
 
-#Evaluating the embeddings
+# Evaluating the embeddings
 
 As noted above, the evaluation code for word2vec and fastText is situated in the latter half of the train_model() functions of their respective Python files, following the mod_vectors.save() call. If you don't wish to run a full training session, simply comment out the training code - that is, the call on a training function, and the call to save the resulting file - and go directly to the load function that follows.
 
