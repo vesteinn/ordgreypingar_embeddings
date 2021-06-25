@@ -1,4 +1,4 @@
-# Embeddings
+# Embeddings / Greypingar ([ÍSLENSKA](https://github.com/stofnun-arna-magnussonar/ordgreypingar_embeddings/blob/main/LESTU.md))
 
 This repository houses evaluation datasets for semantic and morphological relatedness in the Icelandic language, along with pre-trained word embeddings evaluated using those datasets.
 
