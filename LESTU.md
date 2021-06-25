@@ -1,4 +1,4 @@
-# Greypingar
+# Greypingar ([English](https://github.com/stofnun-arna-magnussonar/ordgreypingar_embeddings/blob/main/README.md))
 Þetta varðveislusafn hýsir gagnasöfn sem meta getu orðvigralíkana til þess að átta sig á merkingarfræði og orðhlutafræði íslensku, auk forþjálfaðra greypinga sem hafa verið metnar með téðum gagnasöfnum.
 
 Nánar tiltekið geta notendur vefsins beitt efni hans til að framkvæma eitt eða fleiri af eftirfarandi verkum:
