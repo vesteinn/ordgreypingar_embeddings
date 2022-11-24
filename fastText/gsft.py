@@ -335,5 +335,5 @@ def uncovec_vectors(in_vectors, alpha):
 
 
 ### MAIN STARTS ###
-msl_dictionary = load_msl('msl.txt')
-train_model(msl_dictionary)
+#msl_dictionary = load_msl('msl.txt')
+#train_model(msl_dictionary)

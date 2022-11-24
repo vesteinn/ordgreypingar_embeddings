@@ -1,3 +1,15 @@
+** This is a fork of the original repository, minor changes have been made to support evaluation of pre-trained models **
+
+To evaluate a binary formated fasttext model (such as those provided by facebook or gotten by running the fasttext package), you can run
+
+```bash
+cd fastText
+python eval.py --model cc.is.300.bin
+```
+
+--- 
+
+
 # Embeddings / Greypingar ([íslenska](https://github.com/stofnun-arna-magnussonar/ordgreypingar_embeddings/blob/main/LESTU.md))
 
 This repository houses evaluation datasets for semantic and morphological relatedness in the Icelandic language, along with pre-trained word embeddings evaluated using those datasets.

@@ -1,9 +1,10 @@
 import itertools as it
 from gensim.models import KeyedVectors
-from progress.bar import IncrementalBar
 import sys
+import tqdm
 
-def evaluate_word_analogies_mod(analogies, vectors):
+
+def evaluate_word_analogies_mod(analogies, vectors=None, model=None):
     """
     analogies = the txt file containing the analogy questions of one of the four
     top categories of IceBATS. 
@@ -36,7 +37,10 @@ def evaluate_word_analogies_mod(analogies, vectors):
     group of words (e.g. 'USA is to English is like Britain is to what?')."""
 
     print('Starting analogy evaluations using %s. Loading model...' % analogies)
-    language_model = KeyedVectors.load(vectors)
+    if vectors is not None:
+        language_model = KeyedVectors.load(vectors)
+    else:
+        language_model = model
 
     ok_keys = language_model.index_to_key 
 
@@ -47,8 +51,7 @@ def evaluate_word_analogies_mod(analogies, vectors):
     sections, section = [], None
 
     with open(analogies, encoding='utf8') as analogs:
-        filebar = IncrementalBar('Performing analogy evaluations', max = 24510)
-        for line in analogs:
+        for line in tqdm.tqdm(analogs):
             if line.startswith(': '): # the subcategories are seperated here
                 name_section = line.split(':')[1]
                 if section:
@@ -65,7 +68,6 @@ def evaluate_word_analogies_mod(analogies, vectors):
 
                 combo = list(it.product(a, b, c, expected)) # all possible quadruple combinations 
                 quadruplets_no += 1 
-                filebar.next()
                 sys.stdout.flush()
                 not_ok = 0 # the quadruple contains an OOV word
                 right = False
@@ -102,7 +104,6 @@ def evaluate_word_analogies_mod(analogies, vectors):
             
     total = 0
     total_correct = 0
-    filebar.finish()
     for section in sections:
         correct, incorrect = len(section['correct']), len(section['incorrect'])
         if correct + incorrect == 0: # avoid dividing by zero
