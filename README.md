@@ -1,4 +1,4 @@
-** This is a fork of the original repository, minor changes have been made to support evaluation of pre-trained models **
+**This is a fork of the original repository, minor changes have been made to support evaluation of pre-trained models**
 
 To evaluate a binary formated fasttext model (such as those provided by facebook or gotten by running the fasttext package), you can run
 
